@@ -1,0 +1,7 @@
+Flask>=2.0.2
+setuptools-rust
+git+https://github.com/openai/whisper.git
+datetime
+wave
+sklearn
+numpy

@@ -1,10 +1,28 @@
-version: "3"
+version: '3'
 
 services:
   python:
-    build:
-      context: .
+    build: './python'
     command: nodemon main.py
     working_dir: /app
     volumes:
-      - ./app:/app/
+      - ./python:/app/
+      - ./uploads:/app/uploads
+    ports:
+      - 8080:8080
+  web-app:
+    build: './web-app'
+    environment:
+      - API_URL=http://python:8080
+    ports:
+      - 3000:80
+  api:
+    volumes:
+      - ./uploads:/app/uploads
+    build:
+      context: './web-app'
+      dockerfile: Dockerfile.api
+    environment:
+      - PYTHON_API=http://python:8080
+    ports:
+      - 4000:4000
